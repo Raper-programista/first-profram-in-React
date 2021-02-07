@@ -1,0 +1,72 @@
+<!DOCTYPEhtml>
+<html lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="voewport" content="width=device=width">
+	<title>React</title>
+	
+	<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+	
+	<div id="app"></div>
+
+	<script type="text/babel">
+	
+		const Names = () => { // OR const Names = function() {
+				//funkcyjny odpowiednik state
+				const [showNameState, setShowNameState] = React.useState(true) // [zmienna ktora ma być edytowana, funkcja do edytowania stanu]
+				const names = ['Mateusz', 'Michał', 'Kasia', 'Ela'];
+				const namesList = names.map(name => <li key={name}>{name}</li>); // nameList to przeiterowana tablica for each OR nameList return for(name : names) name;
+				const toogleNames = () => setShowNameState(!showNameState)
+
+				return (
+					<div> 
+						{showNameState ? <ul>{namesList}</ul> : "brak imnon"}
+						<br />
+						<button onClick={toogleNames} >Hide names</button>
+					</div>
+				)
+			 // if(showNamesStates) <ul>nameList}</ul>  else null
+
+		}
+		
+		class Headline extends React.Component { // rozszerza React.Component żeby móc dziedzicyć po niej metodę render()
+			 // tylko w klasach, w funkcjach nie zadzała
+			state = {name: 'ReactJS'}
+
+			render() { //JSX
+				
+				const changeTitle = () => {
+					console.log('chainging title...');
+					this.setState({// specyjalna metoda do zmiany zmiennych stanowych
+
+						name: 'Vue' // podajemy którą watrość chcemy zmienić 
+
+					})
+				}
+				
+				return (
+				<div>
+					<h1> Hello {this.state.name}</h1>
+					
+						<Names />
+						<br />
+						<button onClick = {changeTitle} >Change title</button>
+		
+				</div>)
+				//return React.createElement('h1', null,  'Hello React')
+			}
+		}
+
+		ReactDOM.render (
+			<Headline />
+			,document.getElementById('app'))
+	</script>
+	
+</bodye
+</html>
